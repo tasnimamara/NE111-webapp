@@ -39,35 +39,30 @@ if data is None or len(data) == 0:
     print("no data loaded. :(")
     exit()
 
-# Show basic statistics
-print("\n Data Statistics:")
-print(f"   Sample size: {len(data)}")
-print(f"   Mean: {np.mean(data):.3f}")
-print(f"   Std Dev: {np.std(data):.3f}")
-print(f"   Min: {np.min(data):.3f}")
-print(f"   Max: {np.max(data):.3f}")
+print("\n data statistics:")
+print(f"sample size: {len(data)}")
+print(f"mean: {np.mean(data):.3f}")
+print(f"std dev: {np.std(data):.3f}")
+print(f"min: {np.min(data):.3f}")
+print(f"max: {np.max(data):.3f}")
 
-# Plot 1: Show raw data (like in your assignment example)
 fig1, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
 
-# Left plot: Raw data points
 ax1.plot(data, 'k.', alpha=0.6)
-ax1.set_xlabel('Measurement Number')
-ax1.set_ylabel('Value')
-ax1.set_title('Raw Data Points')
+ax1.set_xlabel('measurement #')
+ax1.set_ylabel('value')
+ax1.set_title('data Points')
 ax1.grid(True, alpha=0.3)
 
-# Right plot: Histogram
-ax2.hist(data, bins=15, edgecolor='black', alpha=0.7)
-ax2.set_xlabel('Value')
-ax2.set_ylabel('Frequency')
-ax2.set_title('Data Histogram')
+ax2.hist(data, bins=20, density=True, alpha=0.7, color='lightpink', edgecolor='purple',)
+ax2.set_xlabel('value')
+ax2.set_ylabel('frequency')
+ax2.set_title('data histogram')
 ax2.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.show()
 
-# Ask which distribution to fit
 print("\n available distributions:")
 distributions = [
     'normal', 'gamma', 'exponential', 'log-normal', 'weibull',
@@ -83,7 +78,7 @@ try:
     selected_dist = distributions[choice_idx]
 except:
     print("not a valid choice, using choice 1: normal")
-    selected_dist = 'Normal'
+    selected_dist = 'normal'
 
 dist_map = {
     'normal': stats.norm,
