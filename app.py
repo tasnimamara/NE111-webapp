@@ -132,6 +132,55 @@ max_error = np.max(np.abs(hist - predicted))
 print(f"   mean squared error: {mse:.6f}")
 print(f"   maximum error: {max_error:.6f}")
 
+print("\n manual fitting option")
+print("adjust parameters manually (press enter to keep current value):")
+
+manual_params = []
+for i, param in enumerate(params, 1):
+    user_input = input(f"parameter {i} (current {param:.6f}): ")
+    if user_input.strip() == "":
+        manual_params.append(param)
+    else:
+        try:
+            manual_params.append(float(user_input))
+        except:
+            manual_params.append(param)
+            print(f"  invalid input, keeping {param:.6f}")
+
+manual_dist = dist_class(*manual_params)
+manual_pdf = manual_dist.pdf(x)
+
+fig3, ax4 = plt.subplots(figsize=(8, 6))
+
+ax4.hist(data, bins=20, density=True, alpha=0.7, 
+        color='lightpink', edgecolor='purple', label='data histogram')
+ax4.plot(x, pdf, 'r-', linewidth=2, label=f'best fit {selected_dist}')
+ax4.plot(x, manual_pdf, 'g--', linewidth=2, label=f'manual {selected_dist}')
+
+ax4.set_xlabel('value')
+ax4.set_ylabel('density')
+ax4.set_title(f'best fit vs manual fit: {selected_dist}')
+ax4.legend()
+ax4.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+print("\nmanual fit parameters:")
+for i, param in enumerate(manual_params, 1):
+    print(f"   parameter {i}: {param:.6f}")
+
+hist, bin_edges = np.histogram(data, bins=20, density=True)
+bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+manual_predicted = manual_dist.pdf(bin_centers)
+
+manual_mse = np.mean((hist - manual_predicted) ** 2)
+manual_max_error = np.max(np.abs(hist - manual_predicted))
+
+print("\nmanual fit quality metrics:")
+print(f"   mean squared error: {manual_mse:.6f}")
+print(f"   maximum error: {manual_max_error:.6f}")
+
 print(" analysis complete!")
 
 save_choice = input("\nsave results to file? (y/n): ")
@@ -142,10 +191,16 @@ if save_choice.lower() == 'y':
         f.write(f"{'='*40}\n")
         f.write(f"data points: {len(data)}\n")
         f.write(f"distribution: {selected_dist}\n\n")
-        f.write("fitted parameters:\n")
+        f.write("best fit parameters:\n")
         for i, param in enumerate(params, 1):
             f.write(f"parameter {i}: {param:.6f}\n")
-        f.write(f"\nquality metrics:\n")
+        f.write(f"\nbest fit quality metrics:\n")
         f.write(f"  MSE: {mse:.6f}\n")
         f.write(f"  max error: {max_error:.6f}\n")
+        f.write(f"\nmanual fit parameters:\n")
+        for i, param in enumerate(manual_params, 1):
+            f.write(f"parameter {i}: {param:.6f}\n")
+        f.write(f"\nmanual fit quality metrics:\n")
+        f.write(f"  MSE: {manual_mse:.6f}\n")
+        f.write(f"  max error: {manual_max_error:.6f}\n")
     print(f"results saved to {filename}")
