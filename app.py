@@ -3,11 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from scipy import stats
-
 print(" NE 111 distribution fitting tool")
 
 print("\nhow would you like to enter data?")
