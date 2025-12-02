@@ -68,21 +68,21 @@ plt.tight_layout()
 plt.show()
 
 # Ask which distribution to fit
-print("\n🎯 Available Distributions:")
+print("\n available distributions:")
 distributions = [
-    'Normal', 'Gamma', 'Exponential', 'Log-Normal', 'Weibull',
-    'Beta', 'Uniform', 'Chi-squared', 'Rayleigh', 'Cauchy'
+    'normal', 'gamma', 'exponential', 'log-normal', 'weibull',
+    'beta', 'uniform', 'chi-squared', 'rayleigh', 'cauchy'
 ]
 
 for i, dist in enumerate(distributions, 1):
     print(f"   {i}. {dist}")
 
-choice = input(f"\nChoose distribution (1-{len(distributions)}): ")
+choice = input(f"\nchoose distribution number (1-{len(distributions)}): ")
 try:
     choice_idx = int(choice) - 1
     selected_dist = distributions[choice_idx]
 except:
-    print("❌ Invalid choice, using Normal distribution")
+    print("not a valid choice, using choice 1: normal")
     selected_dist = 'Normal'
 
 dist_map = {
