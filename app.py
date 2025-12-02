@@ -141,7 +141,7 @@ print(" analysis complete!")
 
 save_choice = input("\nsave results to file? (y/n): ")
 if save_choice.lower() == 'y':
-    filename = input("enter filename (e.g., results.txt): ")
+    filename = input("enter what you want the file name to be: ")
     with open(filename, 'w') as f:
         f.write(f"distribution fitting results\n")
         f.write(f"{'='*40}\n")
@@ -149,7 +149,7 @@ if save_choice.lower() == 'y':
         f.write(f"distribution: {selected_dist}\n\n")
         f.write("fitted parameters:\n")
         for i, param in enumerate(params, 1):
-            f.write(f"  Parameter {i}: {param:.6f}\n")
+            f.write(f"parameter {i}: {param:.6f}\n")
         f.write(f"\nquality metrics:\n")
         f.write(f"  MSE: {mse:.6f}\n")
         f.write(f"  max error: {max_error:.6f}\n")
